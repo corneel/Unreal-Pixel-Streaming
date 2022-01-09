@@ -44,13 +44,13 @@ resource "random_string" "admin_password" {
 }
 
 locals {
-  safePWD               = random_string.admin_password.result
+  safePWD               = "Corneel1234!"
   ip_configuration_name = format("%s-mm-config", var.base_name)
   vmss_name             = format("%s%s", substr(var.base_name, 0, 5), "vmss")
 
   mm_security_rules = {
     "Open80In"   = { security_rule_priority = 1000, security_rule_direction = "Inbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "80", security_rule_source_address_prefix = "*", security_rule_destination_address_prefix = "*" },
-    "Open3389In" = { security_rule_priority = 1030, security_rule_direction = "Inbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "3389", security_rule_source_address_prefix = "64.223.129.16", security_rule_destination_address_prefix = "*" },
+    "Open3389In" = { security_rule_priority = 1030, security_rule_direction = "Inbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "3389", security_rule_source_address_prefix = "*", security_rule_destination_address_prefix = "*" },
     "Open443In"  = { security_rule_priority = 1040, security_rule_direction = "Inbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "443", security_rule_source_address_prefix = "*", security_rule_destination_address_prefix = "*" },
     "Open80Out"  = { security_rule_priority = 1000, security_rule_direction = "Outbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "80", security_rule_source_address_prefix = "*", security_rule_destination_address_prefix = "*" },
     "Open443Out" = { security_rule_priority = 1060, security_rule_direction = "Outbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "443", security_rule_source_address_prefix = "*", security_rule_destination_address_prefix = "*" }
@@ -59,7 +59,7 @@ locals {
     "Open80In"   = { security_rule_priority = 1000, security_rule_direction = "Inbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "80", security_rule_source_address_prefix = "*", security_rule_destination_address_prefix = "*" },
     "Open8888In" = { security_rule_priority = 1040, security_rule_direction = "Inbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "8888", security_rule_source_address_prefix = "*", security_rule_destination_address_prefix = "*" },
     "Open8889In" = { security_rule_priority = 1050, security_rule_direction = "Inbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "8889", security_rule_source_address_prefix = "*", security_rule_destination_address_prefix = "*" }
-    "Open3389In" = { security_rule_priority = 1060, security_rule_direction = "Inbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "3389", security_rule_source_address_prefix = "64.223.129.16", security_rule_destination_address_prefix = "*" },
+    "Open3389In" = { security_rule_priority = 1060, security_rule_direction = "Inbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "3389", security_rule_source_address_prefix = "*", security_rule_destination_address_prefix = "*" },
     "Open443In"  = { security_rule_priority = 1070, security_rule_direction = "Inbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "443", security_rule_source_address_prefix = "*", security_rule_destination_address_prefix = "*" },
     "Open8890In" = { security_rule_priority = 1080, security_rule_direction = "Inbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "8890", security_rule_source_address_prefix = "*", security_rule_destination_address_prefix = "*" },
     "Open8891In" = { security_rule_priority = 1090, security_rule_direction = "Inbound", security_rule_access = "Allow", security_rule_protocol = "Tcp", security_rule_source_port_range = "*", security_rule_destination_port_range = "8891", security_rule_source_address_prefix = "*", security_rule_destination_address_prefix = "*" }
@@ -74,7 +74,7 @@ data "azurerm_client_config" "regional-current" {}
 #put this password in akv
 resource "azurerm_key_vault_secret" "pwd_secret" {
   name         = format("%s-%s-password", var.base_name, var.region)
-  value        = local.safePWD
+  value        = "Corneel1234!"
   key_vault_id = var.key_vault_id
 }
 
@@ -142,7 +142,7 @@ resource "azurerm_windows_virtual_machine" "vm" {
   resource_group_name      = azurerm_resource_group.region-rg.name
   size                     = var.matchmaker_vm_size
   admin_username           = var.matchmaker_admin_username
-  admin_password           = local.safePWD
+  admin_password           = "Corneel1234!"
   enable_automatic_updates = true
   provision_vm_agent       = true
 
@@ -265,7 +265,7 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   resource_group_name = azurerm_resource_group.region-rg.name
 
   admin_username = var.backend_admin_username
-  admin_password = local.safePWD
+  admin_password = "Corneel1234!"
 
   sku       = var.vmss_size
   instances = var.vmss_start_instances
