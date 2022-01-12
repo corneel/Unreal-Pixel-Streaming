@@ -258,8 +258,6 @@ resource "azurerm_network_security_group" "backend-nsg" {
   resource_group_name = azurerm_resource_group.region-rg.name
 }
 
-#priority = "Spot"
-#eviction_policy = "Deallocate"
 #create the vmss
 resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
   name                = local.vmss_name
@@ -268,6 +266,9 @@ resource "azurerm_windows_virtual_machine_scale_set" "vmss" {
 
   admin_username = var.backend_admin_username
   admin_password = "Corneel1234!"
+
+  priority = "Spot"
+  eviction_policy = "Deallocate"
 
   sku       = var.vmss_size
   instances = var.vmss_start_instances
